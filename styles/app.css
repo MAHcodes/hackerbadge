@@ -92,10 +92,12 @@ form > div {
   transform: translateX(-50%);
 }
 
+input[type="file"],
 input[type="text"] {
   border: 2px solid #030c30;
 }
 
+input[type="file"],
 input[type="text"],
 button {
   padding: 0.5rem 1rem;
