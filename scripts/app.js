@@ -1,10 +1,47 @@
-const handleSave = () => {
-  console.log("save");
-  html2canvas(document.querySelector("#badge")).then((canvas) => {
+const handleSave = (e) => {
+  e.preventDefault();
+  html2canvas(document.getElementById("badge")).then((canvas) => {
     canvas.toBlob(function(blob) {
-      saveAs(blob, "pretty image.png");
+      saveAs(blob, "hackerbadge.png");
     });
   });
 };
 
-document.querySelector("#save").addEventListener("click", handleSave);
+document.getElementById("save").addEventListener("click", handleSave);
+
+const handleName = (event) => {
+  document.getElementById("name").innerText = event.target.value;
+}
+
+document.getElementById("name-input").addEventListener("input", handleName);
+
+const handleRole = (event) => {
+  console.log(event.target.checked);
+  const roles = document.getElementById("roles");
+  const images =  document.querySelectorAll("form .role-img");
+  images.forEach(img => {
+    if (img.dataset.role === event.target.id) {
+      if (event.target.checked) {
+        const newImage = document.createElement("img");
+        newImage.src = img.src;
+        newImage.className = "role-img";
+        newImage.dataset.role = img.dataset.role;
+        roles.appendChild(newImage);
+      } else {
+        const image = roles.querySelector(`.role-img[data-role="${img.dataset.role}"]`);
+        image.remove();
+      }
+    }
+  })
+}
+
+document.querySelectorAll("input[name='role']").forEach(checkbox => {
+  checkbox.addEventListener("change", handleRole);
+})
+
+const handleProf = (event) => {
+  const profImg = document.getElementById("prof-img");
+  profImg.src = event.target.value;
+}
+
+document.getElementById("prof-input").addEventListener("input", handleProf);
